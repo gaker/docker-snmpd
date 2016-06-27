@@ -1,0 +1,13 @@
+
+
+
+snmpd:
+  build: .
+  ports:
+    - "161:161/udp"
+  privileged: true
+  net: "host"
+  volumes:
+    - /dev/:/dev/:ro
+    - /var/run/:/var/run/
+    - /sys/:/sys/:ro
