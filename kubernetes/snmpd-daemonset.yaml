@@ -1,0 +1,58 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: snmpd
+  labels:
+    tier: monitoring
+    app: snmpd
+    version: v1
+spec:
+  template:
+    metadata:
+      labels:
+        name: snmpd
+    spec:
+      # Filter to specific nodes:
+      # nodeSelector:
+      #  app: snmpd
+      hostPID: true
+      hostIPC: true
+      hostNetwork: true
+      containers:
+        - resources:
+            requests:
+              cpu: 0.15
+          securityContext:
+            privileged: true
+          env:
+            - name: SNMPD_RO_COMMUNITY
+              value: "my-community"
+            - name: SNMPD_SYS_LOCATION
+              value: "GKE"
+            - name: SNMPD_CONTACT
+              value: "root@localhost"
+            - name: SNMPD_DISKS
+              value: "/"
+          image: gaker/docker-snmpd
+          name: snmpd
+          volumeMounts:
+            - name: dev
+              mountPath: /dev
+            - name: run
+              mountPath: /var/run
+            - name: sys
+              mountPath: /sys
+      volumes:
+        - name: dev
+          hostPath:
+              path: /dev
+        - name: run
+          hostPath:
+              path: /var/run
+        - name: sys
+          hostPath:
+              path: /sys
+        - name: log
+          hostPath:
+              path: /var/log
+

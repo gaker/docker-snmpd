@@ -6,7 +6,7 @@ sysLocation "${SNMPD_SYS_LOCATION}"
 sysContact "${SNMPD_SYS_CONTACT}"
 EOF
 
-for DISK in SNMPD_DISKS
+for DISK in $SNMPD_DISKS
 do 
     cat <<EOF >> /etc/snmp/snmpd.conf
 disk ${DISK}
