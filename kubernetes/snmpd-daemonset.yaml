@@ -12,9 +12,6 @@ spec:
       labels:
         name: snmpd
     spec:
-      # Filter to specific nodes:
-      # nodeSelector:
-      #  app: snmpd
       hostPID: true
       hostIPC: true
       hostNetwork: true
@@ -24,35 +21,13 @@ spec:
               cpu: 0.15
           securityContext:
             privileged: true
-          env:
-            - name: SNMPD_RO_COMMUNITY
-              value: "my-community"
-            - name: SNMPD_SYS_LOCATION
-              value: "GKE"
-            - name: SNMPD_CONTACT
-              value: "root@localhost"
-            - name: SNMPD_DISKS
-              value: "/"
-          image: gaker/docker-snmpd
+          image: quay.io/gaker/docker-snmpd:latest
           name: snmpd
           volumeMounts:
-            - name: dev
-              mountPath: /dev
-            - name: run
-              mountPath: /var/run
-            - name: sys
-              mountPath: /sys
+            - name: host_proc
+              mountPath: /host_proc
+              readOnly: true
       volumes:
-        - name: dev
+        - name: host_proc
           hostPath:
-              path: /dev
-        - name: run
-          hostPath:
-              path: /var/run
-        - name: sys
-          hostPath:
-              path: /sys
-        - name: log
-          hostPath:
-              path: /var/log
-
+              path: /proc

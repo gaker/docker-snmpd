@@ -8,6 +8,4 @@ snmpd:
   privileged: true
   net: "host"
   volumes:
-    - /dev/:/dev/:ro
-    - /var/run/:/var/run/
-    - /sys/:/sys/:ro
+    - /proc:/host_proc:ro
