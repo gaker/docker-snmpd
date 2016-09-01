@@ -5,7 +5,7 @@ EXPOSE 161 161/udp
 
 ADD entrypoint.sh /
 
-RUN yum install net-snmp net-snmp-utils
+RUN yum -y install net-snmp net-snmp-utils
 
 ADD snmpd.conf /etc/snmp/snmpd.conf
 
