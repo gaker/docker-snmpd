@@ -1,7 +1,7 @@
 FROM centos:7
 MAINTAINER Greg Aker <me@gregaker.net>
 
-EXPOSE 161/udp 161/udp
+EXPOSE 161 161/udp
 
 ADD entrypoint.sh /
 
